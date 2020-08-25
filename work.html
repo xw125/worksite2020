@@ -61,7 +61,6 @@
                 `;
                 }
                 $(".img-src").css("background-image", `url("${結果[GET_DATA].圖片} ")`);
-                $(".header-img").css("background-image", `url("${結果[GET_DATA].圖片} ")`);
                 setTimeout(() => {
                     $(".loading").addClass("close");
                     setTimeout(() => {
@@ -87,6 +86,7 @@
                     ${結果[GET_DATA].資料}
                 </div>
                 `;
+                $(".header-img").css("background-image", `url("${結果[GET_DATA].圖片} ")`);
             });
         });
 
