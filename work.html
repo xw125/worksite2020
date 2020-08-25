@@ -60,7 +60,14 @@
                     </div>
                 `;
                 }
-
+                $(".img-src").css("background-image", `url("${結果[GET_DATA].圖片} ")`);
+                $(".header-img").css("background-image", `url("${結果[GET_DATA].圖片} ")`);
+                setTimeout(() => {
+                    $(".loading").addClass("close");
+                    setTimeout(() => {
+                        $(".loading").addClass("close-none");
+                    }, 1000)
+                }, 1500);
                 // console.log(結果[GET_DATA].圖片);
                 // document.cookie = `OK = ${結果}`;
                 // document.cookie = "username=John Doe";
@@ -80,14 +87,6 @@
                     ${結果[GET_DATA].資料}
                 </div>
                 `;
-                $(".img-src").css("background-image", `url("${結果[GET_DATA].圖片} ")`);
-                $(".header-img").css("background-image", `url("${結果[GET_DATA].圖片} ")`);
-                setTimeout(() => {
-                    $(".loading").addClass("close");
-                    setTimeout(() => {
-                        $(".loading").addClass("close-none");
-                    }, 1000)
-                }, 1500);
             });
         });
 
