@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDIO / WORKS</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="prerender" href="http://example.com/works.html" />
+    <link rel="prerender" href="http://example.com/works.html?0002" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body class="works">
+    <div class="main">
+        <div class="title">
+            <div><a href="index.html">Studio</a><span> / works</span></div>
+        </div>
+        <div id="search">
+        </div>
+        <div class="works" id="works">
+        </div>
+    </div>
+
+
+    <script>
+        var GET_TAG = window.location.search.substring(1, window.location.search.length);
+        var 識別TAG;
+        switch (GET_TAG) {
+            case "video":
+                console.log(GET_TAG);
+                識別TAG = GET_TAG;
+                break;
+            case "art":
+                console.log(GET_TAG);
+                識別TAG = GET_TAG;
+                break;
+            case "code":
+                console.log(GET_TAG);
+                識別TAG = GET_TAG;
+                break;
+            case "nsfw":
+                console.log(GET_TAG);
+                識別TAG = GET_TAG;
+                break;
+        }
+        if (識別TAG) {
+            var 搜尋結果 = `Search by #` + 識別TAG + ` <a href="works.html">(clear)</a>`;
+            document.getElementById("search").innerHTML = 搜尋結果;
+        }
+        window.addEventListener("load", () => {
+            $.get('https://spreadsheets.google.com/feeds/list/1qZJ11rMsNcLaZ7PesD8yH7foMy2cJNWeoU7Pl_pYWGU/1/public/values?alt=json', function(data) {
+                console.log(data.feed.entry);
+                查詢反饋 = data.feed.entry;
+                document.getElementById("works").innerHTML = "";
+                for (i in 查詢反饋) {
+                    // consosle.log();
+                    // console.log();
+                    // console.log();
+                    var 結果 = {}
+                    結果 = {
+                        "代號": 查詢反饋[i].gsx$websiteid.$t,
+                        "標題": 查詢反饋[i].gsx$websitetitle.$t,
+                        "資訊": 查詢反饋[i].gsx$websiteinfo.$t,
+                        "圖片": 查詢反饋[i].gsx$websiteimages.$t,
+                        "類型": 查詢反饋[i].gsx$websitetype.$t,
+                        "類別": 查詢反饋[i].gsx$websiteclass.$t
+                    };
+                    if (識別TAG && 結果.類型 !== 識別TAG) {
+                        結果.類別 = 結果.類別 + " none";
+                    }
+                    document.getElementById("works").innerHTML = (`
+                    <div class="work ${結果.類別}">
+                        <a href="javascript:delay('work.html?${結果.代號}')">
+                            <div class="img">
+                                <div class="img-src" style="background-image: url('${結果.圖片}');"></div>
+                                <div class="filter"></div>
+                                <div class="name">${結果.標題}</div>
+                            </div>
+                            <div class="name">${結果.標題} / ${結果.類型}</div>
+                            <div class="info">${結果.資訊}</div>
+                        </a>
+                    </div>
+                        ` + document.getElementById("works").innerHTML);
+                }
+                if (識別TAG == "nsfw") {
+                    $('.works').find('.nsfw').removeClass("none").removeClass("nsfw");
+                }
+                // if (識別TAG == "art") {
+                //     $('.works').find('.nsfw').removeClass("none");
+                // }
+                $('.work').click((e) => {
+                    setTimeout(() => {
+                        let target = e.currentTarget;
+
+                        if ($(target).hasClass("ok")) return;
+
+                        $(target).addClass("ok");
+                        console.log()
+                        $(target).find(".img").css("top", $(target).find(".img").position().top);
+                        $(target).find(".img").css("left", $(target).find(".img").position().left);
+                        setTimeout(() => {
+                            $(target).find(".img").css("top", "0");
+                            $(target).find(".img").css("left", "0");
+                        }, 25);
+                    }, 0);
+                });
+
+            });
+        });
+
+        // function nextpage() {
+        //     console.log();
+        //     $(this).addClass("ok");
+        // }
+
+
+
+
+        function delay(URL) {
+            setTimeout(function() {
+                window.location = URL
+            }, 1500);
+        }
+    </script>
+</body>
+
+</html>

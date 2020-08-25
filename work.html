@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loadind...</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body class="work">
+
+    <div class="loading">
+        <div class="img-src" style="background-image: url('${結果.圖片}');"></div>
+        <div class="filter"></div>
+        <div class="name" id="name"></div>
+    </div>
+
+    <div class="main" id="main">
+    </div>
+    <div class="copyright">Studio Copyright 2020.</div>
+
+    <script>
+        var GET_DATA = window.location.search.substring(1, window.location.search.length);
+
+        window.addEventListener("load", () => {
+            $.get('https://spreadsheets.google.com/feeds/list/1qZJ11rMsNcLaZ7PesD8yH7foMy2cJNWeoU7Pl_pYWGU/1/public/values?alt=json', function(data) {
+                // console.log(data.feed.entry);
+                查詢反饋 = data.feed.entry;
+                var 結果 = {};
+                for (i in 查詢反饋) {
+                    // consosle.log();
+                    // console.log();
+                    // console.log();
+                    data_title = 查詢反饋[i].gsx$websiteid.$t;
+                    結果[data_title] = {
+                        "代號": 查詢反饋[i].gsx$websiteid.$t,
+                        "標題": 查詢反饋[i].gsx$websitetitle.$t,
+                        "資訊": 查詢反饋[i].gsx$websiteinfo.$t,
+                        "圖片": 查詢反饋[i].gsx$websiteimages.$t,
+                        "類型": 查詢反饋[i].gsx$websitetype.$t,
+                        "資料": 查詢反饋[i].gsx$websitedata.$t,
+                    };
+                }
+
+                if (GET_DATA.length < 1 || !結果[GET_DATA]) {
+                    // if (結果[GET_DATA].標題 = undefined) {
+                    $(".loading").addClass("close-none");
+                    console.log(2365485);
+                    document.title = "Error 404 Page !";
+                    document.getElementById("main").innerHTML = `
+                    <div class="tags"><a href="javascript:delay('works.html')">WORKS / 404</a></div>
+                    <div class="data">
+                        <h1>oppos!.</h1>
+                        <img src="assets/images/404.gif" class="w-50" alt="">
+                        <h1>page not found.</h1>
+                        
+                    </div>
+                `;
+                }
+
+                // console.log(結果[GET_DATA].圖片);
+                // document.cookie = `OK = ${結果}`;
+                // document.cookie = "username=John Doe";
+                document.title = "STUDIO | " + 結果[GET_DATA].標題.toUpperCase();
+                document.getElementById("name").innerHTML = 結果[GET_DATA].標題;
+                document.getElementById("main").innerHTML = `
+                <div class="tags"><a href="javascript:delay('works.html')">WORKS / ${結果[GET_DATA].類型}</a></div>
+                <div class="header">
+                    <div class="img header-img"></div>
+                    <div class="filter"></div>
+                    <div class="texts">
+                        <div class="title">${結果[GET_DATA].標題}</div>
+                        <div class="sub">${結果[GET_DATA].資訊}</div>
+                    </div>
+                </div>
+                <div class="data">
+                    ${結果[GET_DATA].資料}
+                </div>
+                `;
+                $(".img-src").css("background-image", `url("${結果[GET_DATA].圖片} ")`);
+                $(".header-img").css("background-image", `url("${結果[GET_DATA].圖片} ")`);
+                setTimeout(() => {
+                    $(".loading").addClass("close");
+                    setTimeout(() => {
+                        $(".loading").addClass("close-none");
+                    }, 1000)
+                }, 1500);
+            });
+        });
+
+        function delay(URL) {
+
+            setTimeout(function() {
+                window.location = URL;
+            }, 1000);
+            $(".work").addClass("nextpage");
+        }
+
+
+
+        // var images = [];
+
+        // function preload() {
+        //     for (var i = 0; i < arguments.length; i++) {
+        //         images[i] = new Image();
+        //         images[i].src = preload.arguments[i];
+        //     }
+        // }
+
+        // //-- usage --//
+        // preload(
+        //     "assets/images/ACOD.png"
+        // )
+    </script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</body>
+
+</html>

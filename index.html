@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="works.html">
+    <link rel="preconnect" href="work.html">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body class="index ">
+    <div class="background">
+        <video loop="true" autoplay="autoplay" muted="true" preload="auto" width="auto" height="100vh">
+        <source src="index_background.mp4" type="video/mp4"> Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="main">
+        <div class="big-title">
+            <div class="title">studio</div>
+            <div class="tags">
+                <a href="javascript:delay('works.html?video')">#Video</a>, <a href="javascript:delay('works.html?art')">#Art</a>, <a href="javascript:delay('works.html?code')">#Code</a>, <a href="work.html?about">@about-me</a>
+            </div>
+        </div>
+        <div class="more">
+            <a href="javascript:delay('works.html')">more</a>
+        </div>
+    </div>
+
+    <script>
+        function delay(URL) {
+            setTimeout(function() {
+                window.location = URL
+            }, 1000);
+            $("body").addClass("nextpage");
+        }
+    </script>
+</body>
+
+</html>
