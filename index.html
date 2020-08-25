@@ -9,6 +9,21 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="preconnect" href="works.html">
     <link rel="preconnect" href="work.html">
+    <script>
+        var images = [];
+
+        function preload() {
+            for (var i = 0; i < arguments.length; i++) {
+                images[i] = new Image();
+                images[i].src = preload.arguments[i];
+            }
+        }
+
+        //-- usage --//
+        preload(
+            "assets/images/loading.jpg"
+        )
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -37,21 +52,6 @@
             }, 1000);
             $("body").addClass("nextpage");
         }
-
-
-        var images = [];
-
-        function preload() {
-            for (var i = 0; i < arguments.length; i++) {
-                images[i] = new Image();
-                images[i].src = preload.arguments[i];
-            }
-        }
-
-        //-- usage --//
-        preload(
-            "assets/images/loading.jpg"
-        )
     </script>
 </body>
 
